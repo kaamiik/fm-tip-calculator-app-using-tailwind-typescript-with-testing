@@ -1,4 +1,3 @@
-import * as React from "react";
 import NumberInput from "../NumberInput";
 import TipGroup from "../TipGroup";
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 function Results() {
   return (
     <div className="px-8 pb-8 lg:py-8 lg:ps-0 lg:pe-8 lg:grid">

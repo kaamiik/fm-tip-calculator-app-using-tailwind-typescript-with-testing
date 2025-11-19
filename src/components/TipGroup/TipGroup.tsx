@@ -1,4 +1,3 @@
-import * as React from "react";
 import RadioTip from "../RadioTip";
 import CustomTip from "../CustomTip";
 
