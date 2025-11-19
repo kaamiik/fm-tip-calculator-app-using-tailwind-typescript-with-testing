@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/SpaceMono-Bold.ttf") format("truetype");
+}
+
 @theme {
   --color-cyan: hsl(172 67% 45%);
   --color-very-dark-cyan: hsl(183 100% 15%);
@@ -8,4 +16,6 @@
   --color-light-grayish-cyan: hsl(185 41% 84%);
   --color-very-light-grayish-cyan: hsl(189 41% 97%);
   --color-white: hsl(0 0% 100%);
+
+  --font-mono: "Space Mono", monospace;
 }

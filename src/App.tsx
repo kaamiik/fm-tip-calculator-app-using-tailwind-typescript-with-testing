@@ -1,16 +1,13 @@
+import Results from "./components/Results";
+import TipCalculatorForm from "./components/TipCalculatorForm";
+
 function App() {
   return (
-    <>
-      <header className="mt-12">
-        <a href="/" aria-labelledby="home">
-          <span id="home" hidden>
-            SPLITTER HOME
-          </span>
-          <img src="/images/logo.svg" alt="" className="mx-auto" />
-        </a>
-      </header>
-      <main></main>
-    </>
+    <main className="bg-white rounded-t-3xl md:rounded-3xl mt-10 lg:mt-20 max-w-2xl mx-auto lg:max-w-230 grid lg:grid-cols-2 lg:gap-12">
+      <h1 className="sr-only">Splitter Tip Calculator App</h1>
+      <TipCalculatorForm />
+      <Results />
+    </main>
   );
 }
 
