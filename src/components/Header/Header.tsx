@@ -1,4 +1,4 @@
-function Header({ className = "" }: { className: string }) {
+function Header({ className = '' }: { className: string }) {
   return (
     <header className={className}>
       <a href="/" aria-labelledby="home">

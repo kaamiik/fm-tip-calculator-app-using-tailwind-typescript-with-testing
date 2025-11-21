@@ -1,27 +1,35 @@
-import * as React from "react";
+import * as React from 'react';
+import { FieldError } from 'react-hook-form';
 
-function RadioTip({
-  label,
-  ...delegated
-}: Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "name" | "id"> & {
-  label: string;
-}) {
+const RadioTip = React.forwardRef<
+  HTMLInputElement,
+  Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'name' | 'id'> & {
+    label: string;
+    error?: FieldError;
+  }
+>(({ label, error, ...delegated }, ref) => {
   const generatedId = React.useId();
+  const finalId = `${generatedId}-tip`;
+
   return (
     <label
-      htmlFor={`${generatedId}-tip`}
-      className="relative bg-very-dark-cyan text-white text-2xl py-1.5 px-4 text-center rounded-md hover:bg-cyan/40 hover:text-very-dark-cyan [&:has(input:checked)]:bg-cyan [&:has(input:checked)]:text-very-dark-cyan"
+      htmlFor={finalId}
+      className={`bg-very-dark-cyan [&:has(input:hover)]:bg-cyan/40 [&:has(input:hover)]:text-very-dark-cyan [&:has(input:focus-visible)]:bg-cyan/40 [&:has(input:focus-visible)]:text-very-dark-cyan relative rounded-md px-4 py-1.5 text-center text-2xl text-white [&:has(input:focus-visible)]:outline-2 ${
+        error
+          ? '[&:has(input:focus-visible)]:outline-red'
+          : '[&:has(input:focus-visible)]:outline-very-dark-cyan'
+      } [&:has(input:checked)]:bg-cyan [&:has(input:checked)]:text-very-dark-cyan [&:has(input:focus-visible)]:outline-offset-1`}
     >
       <input
-        type="radio"
-        name="tip"
-        id={`${generatedId}-tip`}
-        className="group absolute w-full h-full top-0 left-0 cursor-pointer opacity-0"
+        ref={ref}
         {...delegated}
+        type="radio"
+        id={finalId}
+        className="absolute top-0 left-0 h-full w-full cursor-pointer opacity-0"
       />
       {label}
     </label>
   );
-}
+});
 
 export default RadioTip;

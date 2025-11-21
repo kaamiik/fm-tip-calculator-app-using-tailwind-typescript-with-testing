@@ -1,28 +1,37 @@
-import * as React from "react";
+import * as React from 'react';
+import { FieldError } from 'react-hook-form';
 
-function CustomTip({
-  id = "",
-  className = "",
-}: Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "type" | "id" | "className"
-> & { id?: string; className?: string }) {
+const CustomTip = React.forwardRef<
+  HTMLInputElement,
+  Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'type' | 'id' | 'className'
+  > & {
+    id?: string;
+    className?: string;
+    error?: FieldError;
+  }
+>(({ id = '', className = '', error, ...delegated }, ref) => {
   const generatedId = React.useId();
   const finalId = id || generatedId;
+
   return (
     <div>
-      <label htmlFor="" className="sr-only">
+      <label htmlFor={finalId} className="sr-only">
         CUSTOM TIP
       </label>
       <input
-        type="number"
-        name="custom-tip"
+        ref={ref}
+        {...delegated}
+        type="text"
         id={finalId}
-        className={`w-full border-0 bg-very-light-grayish-cyan text-2xl text-very-dark-cyan py-1.5 px-5 rounded-md text-right outline-0 focus-visible:outline-2 focus-visible:outline-cyan ${className}`}
+        className={`bg-very-light-grayish-cyan text-very-dark-cyan w-full rounded-md border-0 px-5 py-1.5 text-right text-2xl outline-0 focus-visible:outline-2 ${
+          error ? 'focus-visible:outline-red' : 'focus-visible:outline-cyan'
+        } ${className}`}
         placeholder="Custom"
       />
     </div>
   );
-}
+});
 
 export default CustomTip;

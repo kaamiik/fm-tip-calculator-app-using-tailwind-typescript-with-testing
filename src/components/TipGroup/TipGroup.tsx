@@ -1,19 +1,66 @@
-import RadioTip from "../RadioTip";
-import CustomTip from "../CustomTip";
+import RadioTip from '../RadioTip';
+import CustomTip from '../CustomTip';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  FieldError,
+} from 'react-hook-form';
+import { TipForm } from '../../schema/tip';
 
-function TipGroup() {
-  const tipAmounts = ["5%", "10%", "15%", "25%", "50%"];
+function TipGroup({
+  register,
+  setValue,
+  watch,
+  error,
+}: {
+  register: UseFormRegister<TipForm>;
+  setValue: UseFormSetValue<TipForm>;
+  watch: UseFormWatch<TipForm>;
+  error?: FieldError;
+}) {
+  const tipRadio = watch('tipRadio') || '';
+  const tipCustom = watch('tipCustom') || '';
+
+  const tipAmounts = ['5', '10', '15', '25', '50'];
+
+  function handleTipChange(value: string) {
+    setValue('tipRadio', value, { shouldValidate: true });
+    setValue('tipCustom', '');
+  }
+
+  function handleCustomTipChange(value: string) {
+    setValue('tipCustom', value, { shouldValidate: true });
+    setValue('tipRadio', '');
+  }
+
   return (
-    <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
-      {tipAmounts.map((tipAmount, index) => (
-        <RadioTip
-          key={index}
-          label={tipAmount}
-          value={tipAmount.replace("%", "")}
+    <fieldset className="border-0 p-0">
+      <legend>Select Tip %</legend>
+      <div className="mt-4 grid grid-cols-2 gap-4 md:grid-cols-3">
+        {tipAmounts.map((tipAmount, index) => (
+          <RadioTip
+            key={index}
+            {...register('tipRadio')}
+            label={`${tipAmount}%`}
+            value={tipAmount}
+            checked={tipRadio === tipAmount}
+            onChange={(e) => handleTipChange(e.target.value)}
+            error={error}
+          />
+        ))}
+        <CustomTip
+          key="custom"
+          {...register('tipCustom')}
+          value={tipCustom}
+          onChange={(e) => handleCustomTipChange(e.target.value)}
+          error={error}
         />
-      ))}
-      <CustomTip key="custom" />
-    </div>
+      </div>
+      {error && (
+        <span className="text-red text-xs md:text-base">{error.message}</span>
+      )}
+    </fieldset>
   );
 }
 
