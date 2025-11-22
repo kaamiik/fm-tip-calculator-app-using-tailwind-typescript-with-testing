@@ -14,12 +14,6 @@ function TipCalculatorForm() {
   } = useForm<TipForm>({
     resolver: zodResolver(tipFormSchema),
     mode: 'onSubmit',
-    defaultValues: {
-      bill: '',
-      peopleNum: '',
-      tipRadio: '',
-      tipCustom: '',
-    },
   });
 
   function onSubmit(data: TipForm) {
@@ -46,7 +40,8 @@ function TipCalculatorForm() {
         register={register}
         setValue={setValue}
         watch={watch}
-        error={errors.tipRadio}
+        errorRadio={errors.tipRadio}
+        errorCustom={errors.tipCustom}
       />
 
       <NumberInput

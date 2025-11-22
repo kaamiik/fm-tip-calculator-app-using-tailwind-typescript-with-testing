@@ -12,12 +12,14 @@ function TipGroup({
   register,
   setValue,
   watch,
-  error,
+  errorRadio,
+  errorCustom,
 }: {
   register: UseFormRegister<TipForm>;
   setValue: UseFormSetValue<TipForm>;
   watch: UseFormWatch<TipForm>;
-  error?: FieldError;
+  errorRadio?: FieldError;
+  errorCustom?: FieldError;
 }) {
   const tipRadio = watch('tipRadio') || '';
   const tipCustom = watch('tipCustom') || '';
@@ -30,9 +32,11 @@ function TipGroup({
   }
 
   function handleCustomTipChange(value: string) {
-    setValue('tipCustom', value, { shouldValidate: true });
+    setValue('tipCustom', value);
     setValue('tipRadio', '');
   }
+
+  const error = errorRadio || errorCustom;
 
   return (
     <fieldset className="border-0 p-0">
@@ -46,7 +50,7 @@ function TipGroup({
             value={tipAmount}
             checked={tipRadio === tipAmount}
             onChange={(e) => handleTipChange(e.target.value)}
-            error={error}
+            error={errorRadio}
           />
         ))}
         <CustomTip
@@ -54,7 +58,7 @@ function TipGroup({
           {...register('tipCustom')}
           value={tipCustom}
           onChange={(e) => handleCustomTipChange(e.target.value)}
-          error={error}
+          error={errorCustom}
         />
       </div>
       {error && (

@@ -2,27 +2,16 @@ import { z } from 'zod';
 
 export const tipFormSchema = z
   .object({
-    bill: z
-      .string()
-      .min(1, '‌Bill amount is required')
-      .refine((val) => !isNaN(Number(val)), {
-        message: 'Must be a valid number',
-      })
-      .refine((val) => Number(val) > 0, {
-        message: "Can't be zero or less",
-      }),
+    bill: z.coerce
+      .number<number>('Must be a valid number')
+      .gt(0, "Can't be zero or less"),
 
-    tipRadio: z.string().optional(),
-    tipCustom: z.string().optional(),
-    peopleNum: z
-      .string()
-      .min(1, 'Number of people is required')
-      .refine((val) => !isNaN(Number(val)), {
-        message: 'Must be a valid number',
-      })
-      .refine((val) => Number(val) > 0, {
-        message: "Can't be zero or less",
-      }),
+    tipRadio: z.string().optional().nullable(),
+    tipCustom: z.string().optional().nullable(),
+    peopleNum: z.coerce
+      .number<number>('Must be a valid number')
+      .int('Must be an integer')
+      .gt(0, "Can't be zero or less"),
   })
   .superRefine((data, ctx) => {
     const hasRadio = data.tipRadio;
@@ -44,7 +33,7 @@ export const tipFormSchema = z
         ctx.addIssue({
           code: 'custom',
           message: 'Must be a valid number',
-          path: ['tipRadio'],
+          path: ['tipCustom'],
         });
         return;
       }
@@ -52,8 +41,8 @@ export const tipFormSchema = z
       if (customValue <= 0) {
         ctx.addIssue({
           code: 'custom',
-          message: 'Must be greater than 0',
-          path: ['tipRadio'],
+          message: "Can't be zero or less",
+          path: ['tipCustom'],
         });
         return;
       }
@@ -62,11 +51,11 @@ export const tipFormSchema = z
         ctx.addIssue({
           code: 'custom',
           message: 'Cannot exceed 100%',
-          path: ['tipRadio'],
+          path: ['tipCustom'],
         });
         return;
       }
     }
   });
 
-export type TipForm = z.input<typeof tipFormSchema>;
+export type TipForm = z.infer<typeof tipFormSchema>;

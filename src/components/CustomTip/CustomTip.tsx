@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FieldError } from 'react-hook-form';
+import { handleKeyDown } from '../../utils/utils';
 
 const CustomTip = React.forwardRef<
   HTMLInputElement,
@@ -23,7 +24,8 @@ const CustomTip = React.forwardRef<
       <input
         ref={ref}
         {...delegated}
-        type="text"
+        type="number"
+        onKeyDown={handleKeyDown}
         id={finalId}
         className={`bg-very-light-grayish-cyan text-very-dark-cyan w-full rounded-md border-0 px-5 py-1.5 text-right text-2xl outline-0 focus-visible:outline-2 ${
           error ? 'focus-visible:outline-red' : 'focus-visible:outline-cyan'

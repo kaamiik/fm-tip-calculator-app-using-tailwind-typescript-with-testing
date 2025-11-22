@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { handleKeyDown } from '../../utils/utils';
 import { FieldError } from 'react-hook-form';
 
 type NumberInputProps = Omit<
@@ -16,6 +17,7 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ({ label, id = '', className = '', icon, error, ...delegated }, ref) => {
     const generatedId = React.useId();
     const finalId = id || generatedId;
+
     return (
       <div className="relative flex flex-col gap-1.5">
         <label htmlFor={finalId} className="">
@@ -24,12 +26,13 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
         <input
           ref={ref}
           {...delegated}
-          type="text"
+          type="number"
           id={finalId}
           className={`bg-very-light-grayish-cyan text-very-dark-cyan w-full rounded-md border-0 px-5 py-1.5 text-right text-2xl outline-0 focus-visible:outline-2 ${
             error ? 'focus-visible:outline-red' : 'focus-visible:outline-cyan'
           } ${className}`}
           placeholder="0"
+          onKeyDown={handleKeyDown}
         />
         <div className="absolute top-1/2 left-5 translate-y-1/2 content-['']">
           {icon === 'dollar' ? (
