@@ -1,32 +1,31 @@
 import NumberInput from '../NumberInput';
 import TipGroup from '../TipGroup';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { tipFormSchema, TipForm } from '../../schema/tip';
+import {
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  FieldErrors,
+} from 'react-hook-form';
+import { TipForm } from '../../schema/tip';
+import Button from '../Button';
 
-function TipCalculatorForm() {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm<TipForm>({
-    resolver: zodResolver(tipFormSchema),
-    mode: 'onSubmit',
-  });
-
-  function onSubmit(data: TipForm) {
-    console.log('Form submitted successfully:', data);
-    const finalTip = data.tipCustom || data.tipRadio;
-    console.log('Tip percentage:', finalTip);
-  }
-
+function TipCalculatorForm({
+  register,
+  setValue,
+  watch,
+  errors,
+  ...delegated
+}: React.FormHTMLAttributes<HTMLFormElement> & {
+  register: UseFormRegister<TipForm>;
+  setValue: UseFormSetValue<TipForm>;
+  watch: UseFormWatch<TipForm>;
+  errors: FieldErrors<TipForm>;
+}) {
   return (
     <form
+      {...delegated}
       noValidate
       action=""
-      onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-8 px-8 py-8 lg:gap-10 lg:py-11 lg:ps-12 lg:pe-0"
     >
       <NumberInput
@@ -50,7 +49,7 @@ function TipCalculatorForm() {
         {...register('peopleNum')}
         error={errors.peopleNum}
       />
-      <button className="sr-only">Submit</button>
+      <Button>Submit</Button>
     </form>
   );
 }

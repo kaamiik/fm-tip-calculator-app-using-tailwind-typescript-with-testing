@@ -34,7 +34,9 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
           placeholder="0"
           onKeyDown={handleKeyDown}
         />
-        <div className="absolute top-1/2 left-5 translate-y-1/2 content-['']">
+        <div
+          className={`absolute ${error ? 'bottom-1/2 translate-y-1/2' : 'top-9 translate-y-1/2'} left-5 content-['']`}
+        >
           {icon === 'dollar' ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="11" height="17">
               <path
@@ -51,11 +53,9 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             </svg>
           )}
         </div>
-        {error && (
-          <span className="text-red absolute -bottom-6 left-0 text-xs md:text-base">
-            {error.message}
-          </span>
-        )}
+        <span className="text-red text-xs md:text-base" aria-live="assertive">
+          {error?.message || ''}
+        </span>
       </div>
     );
   }

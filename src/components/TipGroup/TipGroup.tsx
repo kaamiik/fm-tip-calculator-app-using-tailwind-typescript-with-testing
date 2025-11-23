@@ -61,9 +61,10 @@ function TipGroup({
           error={errorCustom}
         />
       </div>
-      {error && (
-        <span className="text-red text-xs md:text-base">{error.message}</span>
-      )}
+
+      <span className="text-red text-xs md:text-base" aria-live="assertive">
+        {error?.message || ''}
+      </span>
     </fieldset>
   );
 }
