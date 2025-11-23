@@ -46,7 +46,7 @@ function Results({
           type="reset"
           disabled={disabled}
           onClick={() => reset()}
-          className="disabled:cursor-not-allowed disabled:opacity-50"
+          className="focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-50"
         >
           Reset
         </Button>

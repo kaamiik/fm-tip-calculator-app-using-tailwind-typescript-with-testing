@@ -49,7 +49,9 @@ function TipCalculatorForm({
         {...register('peopleNum')}
         error={errors.peopleNum}
       />
-      <Button>Submit</Button>
+      <Button className="focus-visible:outline-very-dark-cyan">
+        Calculate
+      </Button>
     </form>
   );
 }
