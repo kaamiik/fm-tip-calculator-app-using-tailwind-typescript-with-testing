@@ -1,5 +1,5 @@
 import { ZodError } from 'zod';
-import { TipForm, tipFormSchema } from './tip';
+import { tipFormSchema } from './tip';
 
 describe('tipFormSchema', () => {
   it('throws an error when bill is 0', () => {
